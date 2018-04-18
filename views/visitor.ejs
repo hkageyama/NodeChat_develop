@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body id="body-visitor">
+    <div id="content">
+      <div id="header">
+        <h1 id="header-visitor">Visitor</h1>
+      </div>
+      <div id="messages-visitor"></div>
+      <div id="footer">
+        <form id="form-visitor" action="">
+          <input id="input-visitor" autocomplete="off"/>
+          <input type="submit" id="btn-send-visitor" value="Send" />
+        </form>
+      </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.js" integrity="sha256-5i/mQ300M779N2OVDrl16lbohwXNUdzL/R2aVUXyXWA="   crossorigin="anonymous"></script>
+    <script>
+        var socket = io.connect('http://localhost:3000/',{ query: "user_type=visitor" });
+    </script>
+    <script src="/js/chat.js" type="text/javascript"></script>
+  </body>
+</html>

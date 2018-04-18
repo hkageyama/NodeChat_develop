@@ -1,0 +1,15 @@
+<html>
+  <h1>RoomID List</h1>
+  <ul>
+      <% lists.forEach(function(item) { %>
+        <li class="room_list_item">
+            <div class="room"><%= item.room_id %></div>
+        </li>
+    <% }); %>
+  </ul>
+  <div>Room ID:</div>
+  <form method="post" action="/agent">
+    <input type="text" name="room_id"/>
+    <input type="submit" value="login">
+  </form>
+</html>
