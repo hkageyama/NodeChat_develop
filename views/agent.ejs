@@ -7,16 +7,16 @@
   <body id="body-agent">
     <div id="content">
       <div id="header">
-        <h1 id="header-agent">Room No: <%= room_id %></h1>
+        <h1 id="header-agent"><%= agent_name %> @ <%= room_id %></h1>
       </div>
       <div id="messages-agent"></div>
       <div id="footer">
-        <form id="form-agent" action="">
+        <form id="form-agent" name="form-agent" action="">
           <input id="input-agent" autocomplete="off"/>
+          <input type="hidden" name="user_type" value="agent" />
+          <input type="hidden" name="room_id" value=<%= room_id %> />
           <input type="submit" id="btn-send-agent" value="Send" />
           <input type="submit" id="btn-done-agent" value="Done" />
-          <input type="hidden" name="user_type" value="agent" />
-          <input type="hidden" name="room_id" value="<%= room_id %>" />
         </form>
       </div>
     </div>
