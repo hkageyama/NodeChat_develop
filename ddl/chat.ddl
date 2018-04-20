@@ -6,7 +6,7 @@ drop table if exists room_list cascade;
 
 create table room_list (
     room_id       INT AUTO_INCREMENT    comment 'ルームid'
-  , visitor_id    VARCHAR(100) not null comment '訪問者id'
+  , visitor_id    VARCHAR(100) null     comment '訪問者id'
   , agent_id      VARCHAR(100) null     comment 'エージェントid'
   , update_date   TIMESTAMP    not null comment '更新日時'
   , constraint room_list primary key (room_id)

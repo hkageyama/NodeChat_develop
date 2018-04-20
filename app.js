@@ -43,9 +43,6 @@ app.use(express.static(__dirname + '/views'));
 app.get('/agent', function(req, res) {
   res.render('agent');
 });
-app.post('/agent', function(req, res) {
-  res.render('agent', {room_id: req.body.room_id, agent_name: req.body.agent_name});
-});
 // visitorチャット画面起動
 app.get('/visitor', function(req, res) {
   res.render('visitor');

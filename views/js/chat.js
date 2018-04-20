@@ -1,14 +1,11 @@
-// var socket = io();
-// var socket = io.connect('http://localhost:3000/',
-//           { query: 'user_type=' + $('input:hidden[name="user_type"]').val()});
 var socket = io.connect('http://localhost:3000/',
-           { query: {user_type: $('input:hidden[name="user_type"]').val(), room_id: $('input:hidden[name="room_id"]').val() }});
+           { query: {user_type: $('input:hidden[name="user_type"]').val(), 
+                     room_id: $('input:hidden[name="room_id"]').val(),
+                     agent_id: $('input:hidden[name="agent_id"]').val() }});
 
 $(document).ready(function(){
     //【agent】message receiption
     socket.on('front chat message agent', (msg) => {
-        // $('#header-agent').empty();
-        // $('#header-agent').append('Test222!');
         $('#messages-agent').append($('<li>').text(msg));
         $('#messages-agent').scrollTop($('#messages-agent').prop('scrollHeight'));
     });
@@ -18,8 +15,6 @@ $(document).ready(function(){
     });
     //【visitor】message receiption
     socket.on('front chat message visitor', (msg) => {
-        // $('#header-visitor').empty();
-        // $('#header-visitor').append('Test222!');
         $('#messages-visitor').append($('<li>').text(msg));
         $('#messages-visitor').scrollTop($('#messages-visitor').prop('scrollHeight'));
     });
@@ -37,7 +32,7 @@ $(document).ready(function(){
     });
     //【agent】chat done
     $('#btn-done-agent').click(function() {
-        $('#form-agent').attr('action', '/select');
+        $('#form-agent').attr('action', '/');
         $('#form-agent').submit();
         // イベント伝播防止
         return false;
