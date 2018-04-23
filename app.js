@@ -12,9 +12,13 @@ const PORT = process.env.PORT || 3000;
 
 // オブジェクト生成
 var Chat_server = require('./lib/chat_server');
+console.log('before new');
 var chat_server = new Chat_server();
+console.log('after new');
+
 var Access_db = require('./lib/access_db');
 var access_db = new Access_db();
+
 
 // mySQL接続プール設定
 var pool = mysql.createPool({
@@ -60,3 +64,8 @@ http.listen(PORT, () => {
 // ソケット関連処理
 chat_server.listen(http, app);
 access_db.app(app);
+
+
+var test_chat_server = require('./lib/test_chat_server');
+test_chat_server.listen(http, app);
+test_chat_server.loggerTest();
