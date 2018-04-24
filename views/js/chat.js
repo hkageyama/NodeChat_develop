@@ -1,82 +1,57 @@
-var socket = io.connect('http://localhost:3000/chat',
-           { query: {user_type: $('input:hidden[name="user_type"]').val(), 
-                     room_id: $('input:hidden[name="room_id"]').val(),
-                     agent_id: $('input:hidden[name="agent_id"]').val() }
-            //          ,
-            //  reconnection: false,
-            //  transports: ['websocket', 'polling'],
-            //  'sync disconnect on unload': true             
-           });
-
-var g_room_id;
-var g_agent_id;
+let socket = io.connect('http://localhost:3000/chat/');
 
 $(document).ready(function(){
-    //【agent】message receiption
-    socket.on('front chat message agent', (msg) => {
-        $('#messages-agent').append($('<li>').text(msg));
-        $('#messages-agent').scrollTop($('#messages-agent').prop('scrollHeight'));
+    // [common] message receiption
+    socket.on('front chat message', (userType, value) => {
+        $('#messages_' + userType).append($('<li>').text(value));
+        $('#messages_' + userType).scrollTop($('#messages_' + userType).prop('scrollHeight'));
     });
-    socket.on('front set header agent', (room_id, agent_id) => {
-        $('#header-agent').empty();
-        $('#header-agent').append(agent_id + ` @ ` + room_id);
+    // [common] refresh chat screen
+    socket.on('front refresh', (roomId, agentId, userType) => {
+        $('#header_' + userType).empty();
+        $('#header_' + userType).append(agentId + ` @ Room #` + roomId);
+        $('#room_id_' + userType).val(roomId);
+        $('#agent_id_' + userType).val(agentId);
     });
-    //【visitor】message receiption
-    socket.on('front chat message visitor', (msg) => {
-        $('#messages-visitor').append($('<li>').text(msg));
-        $('#messages-visitor').scrollTop($('#messages-visitor').prop('scrollHeight'));
-    });
-    //【agent】invitation receiption
-    socket.on('front invitation', (agent_id, room_id) => {
-        $('#header-agent').empty();
-        $('#header-agent').append(agent_id + ` @ Room#` + room_id);
-        $('#messages-agent').append($('<li>').text('room changed to room#' + room_id));
-        $('#room_id').val(room_id);
-        $('#agent_id').val(agent_id);
-        g_room_id = room_id;
-        g_agent_id = agent_id;
-        // socket.io.uri = 'http://localhost:3000/chat?' + 
-        //               'user_type=' + $('#user_type').val + '&' +
-        //               'room_id=' + room_id + '&' + 'agent_id=' + agent_id;
-        // socket.io.opts.query = 'room_id=' + room_id + '&agent_id=' + agent_id;
-        // socket.io.opts.query = {
-        //     user_type: 'agent',
-        //     room_id: '1',
-        //     agent_id: test
-        // }
-        // 再接続
-        // socket.disconnect();
-        socket.connect();  // -> connected
-        socket.emit('back invitation', room_id);
-    });
-    
-    socket.on('reconnect_attempt', () => {
-    });
-
-    // 【agent】message send
-    $('#btn-send-agent').click(function() {
-        $('#form-agent').submit(function() {
+    // [agent] message send
+    $('#btn_send_agent').click(function() {
+        $('#form_agent').submit(function() {
             // 1formにボタンが複数ある場合に起こるイベントの多重発生抑止。
-            $('#form-agent').attr('action', '');
-            $('#form-agent').off();
-            socket.emit('back chat message agent', $('#input-agent').val());
-            $('#input-agent').val('');
+            $('#form_agent').attr('action', '');
+            $('#form_agent').off();
+
+            socket.emit('back chat message agent', $('#room_id_agent').val(), $('#input_agent').val());
+            $('#input_agent').val('');
             // イベント伝播防止(これがないと後続処理が流れない)
             return false;
         });
     });
-    //【agent】chat done
-    $('#btn-done-agent').click(function() {
-        $('#form-agent').attr('action', '/');
-        $('#form-agent').submit();
+    //【API】Server.dispatchMsg
+    // [visitor] message send
+    $('#form_visitor').submit(function(){
+        socket.emit('back chat message visitor', $('#room_id_visitor').val(), $('#input_visitor').val());
+        $('#input_visitor').val('');
         // イベント伝播防止
         return false;
     });
-    //【visitor】message send
-    $('#form-visitor').submit(function(){
-        socket.emit('back chat message visitor', $('#input-visitor').val());
-        $('#input-visitor').val('');
+    // [agent] chat done
+    $('#btn_done_agent').click(function() {
+        window.open('about:blank','_self').close();
         // イベント伝播防止
         return false;
     });
+    //【API】Server.connect
+    // [common] load client
+    loadClient();
 });
+
+function loadClient() {
+    let userType = $('#user_type').val();
+    let roomId = $('#room_id_' + userType).val();
+    let agentId = $('#agent_id_' + userType).val();
+    if (roomId === '/') {
+        socket.emit('new room', userType);
+    } else {
+        socket.emit('join room', roomId, userType);
+    }
+}

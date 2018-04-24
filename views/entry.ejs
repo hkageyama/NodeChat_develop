@@ -10,18 +10,20 @@
     </div>
     <div id="create" style="display:inline-flex">
       <form id="entryFormAgent" style="display: inline" method="post" action="/agent" target="_blank">
-        <input type="hidden" name="room_id" id="room_id"/>
-        <input type="hidden" name="agent_id" id="agent_id"/>
+        <input type="hidden" name="entry_room_id_agent" id="entry_room_id_agent"/>
+        <input type="hidden" name="entry_agent_id_agent" id="entry_agent_id_agent"/>
         <input type="submit" id="btn_create_agent" value="create room agent" />
       </form>
       <form id="entryFormVisitor" style="display: inline" method="post" action="/visitor" target="_blank">
+        <input type="hidden" name="entry_room_id_visitor" id="entry_room_id_visitor"/>
+        <input type="hidden" name="entry_agent_id_visitor" id="entry_agent_id_visitor"/>
         <input type="submit" id="btn_create_visitor" value="create room visitor" />
       </form>
     </div>
     <div id="select">
-      <div id="room-list">
+      <div id="room_list">
           <% lists.forEach(function(item) { %>
-            <div id="room-list div"> <%= item.room_id %>  : <%= item.agent_id %></div>
+            <div id="room_list div"> <%= item.room_id %>  : <%= item.agent_id %></div>
           <% }); %>
       </div>
     </div>

@@ -4,19 +4,19 @@
     <title>Socket.IO chat</title>
     <link rel="stylesheet" href="/css/style.css">
   </head>
-  <body id="body-visitor">
+  <body id="body_visitor">
     <div id="content">
       <div id="header">
-        <h1 id="header-agent"><%= agent_id %> @ Room #<%= room_id %></h1>
+        <h1 id="header_visitor"><%= agentId %> @ Room #<%= roomId %></h1>
       </div>
-      <div id="messages-visitor"></div>
+      <div id="messages_visitor"></div>
       <div id="footer">
-        <form id="form-visitor" action="">
-          <input id="input-visitor" autocomplete="off"/>
-          <input type="hidden" name="user_type" value="visitor" />
-          <input type="hidden" name="room_id" value=<%= room_id %> />
-          <input type="hidden" name="agent_id" value=<%= agent_id %> />
-          <input type="submit" id="btn-send-visitor" value="Send" />
+        <form id="form_visitor" action="">
+          <input id="input_visitor" autocomplete="off"/>
+          <input type="hidden" name="user_type" id="user_type" value="visitor" />
+          <input type="hidden" name="room_id_visitor" id="room_id_visitor" value=<%= roomId %> />
+          <input type="hidden" name="agent_id_visitor" id="agent_id_visitor" value=<%= agentId %> />
+          <input type="submit" id="btn_send_visitor" value="Send" />
         </form>
       </div>
     </div>

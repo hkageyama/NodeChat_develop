@@ -1,4 +1,5 @@
 // "./node_modules/.bin/nodemon" app.js を実行しておくと、ソース修正後にオートコンパイル
+// ./node_modules/.bin/nodemon app.js (windows10)
 // 各種import
 const express = require('express');
 const app = express();
@@ -11,17 +12,11 @@ const mysql = require('mysql');
 const PORT = process.env.PORT || 3000;
 
 // オブジェクト生成
-var Chat_server = require('./lib/chat_server');
-console.log('before new');
-var chat_server = new Chat_server();
-console.log('after new');
-
-var Access_db = require('./lib/access_db');
-var access_db = new Access_db();
-
+const chat_server = require('./lib/chat_server');
+const access_db = require('./lib/access_db');
 
 // mySQL接続プール設定
-var pool = mysql.createPool({
+const pool = mysql.createPool({
   connectionLimit : 10,
   host     : 'localhost',
   user     : 'root',
@@ -44,14 +39,15 @@ app.use(logger('dev'));
 app.use(express.static(__dirname + '/views'));
 
 // agentチャット画面起動
-app.get('/agent', function(req, res) {
-  res.render('agent');
+app.post('/agent', function(req, res) {
+  startScreen(req, res, 'agent');
 });
 // visitorチャット画面起動
-app.get('/visitor', function(req, res) {
-  res.render('visitor');
+app.post('/visitor', function(req, res) {
+  startScreen(req, res, 'visitor');
 });
-// 【テスト用】sdk向けpostリクエスト発行
+
+//【テスト用】sdk向けpostリクエスト発行
 app.post('/post_to_sdk', function(req, res) {
   console.log('send to SDK： ' + req.body.key);
 });
@@ -62,10 +58,18 @@ http.listen(PORT, () => {
 });
 
 // ソケット関連処理
-chat_server.listen(http, app);
-access_db.app(app);
+chat_server.connectSocket(http, app);
+// db関連処理
+access_db.startFormWithDB(app);
 
-
-var test_chat_server = require('./lib/test_chat_server');
-test_chat_server.listen(http, app);
-test_chat_server.loggerTest();
+// chat screen start
+function startScreen(req, res, type) {
+  let roomId = '';
+  let agentId = '';
+  // room入室
+  if (type === 'agent') {
+    roomId = req.body.entry_room_id_agent;
+    agentId = req.body.entry_agent_id_agent;
+  }
+  res.render(type, {roomId: roomId, agentId: agentId});
+}
