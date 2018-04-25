@@ -36,10 +36,39 @@ $(document).ready(function(){
     });
     // [agent] chat done
     $('#btn_done_agent').click(function() {
-        window.open('about:blank','_self').close();
+        // window.open('about:blank','_self').close();
         // イベント伝播防止
+
+        "use strict";
+        var $content = $('#content:last-child');
+        var newc = $content.clone(true).appendTo('#parent');
+        // $('#content:last-child').clone(true).appendTo('#parent');
+        var input_a = $("#input_agent")[0];
+        alert(input_a.val());
+        // alert(input_a.length);
+        // input_a.map(function() {
+        //     //1つ1つ値を取得する（実施している内容はほぼ上と一緒）
+        //     alert($(this).val());
+        // });
+
+        // var i = 1;
+        // $("#content:last-child").    //#each_rootを取得
+        //  clone(true).   //上で取得した中身をコピー
+        //      find('#input_agent').  //そのコピーした中身のdetailとついている要素を取得
+        //          attr('id', 'input_agent' + i).  //上で取得した要素の中のidをiとする
+        //                appendTo("#parent");
+        
+        // alert($('#input_agent').attr('id'));
+        // alert($('#input_agent1').attr('id'));
+        
+        // socket.emit('back chat message agent', $('#room_id_agent').val(), newc);
+        // $(document).on('input_agent', 'ready', function() {
+        //     alert(input_a.length);
+        // });
+
         return false;
     });
+    
     //【API】Server.connect
     // [common] load client
     loadClient();
