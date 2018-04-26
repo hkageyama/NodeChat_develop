@@ -38,12 +38,18 @@ app.use(logger('dev'));
 // http://localhost:3000/【publicフォルダ配下のファイル名】で 指定ファイルがリダイレクトされる
 app.use(express.static(__dirname + '/views'));
 
+// testSourceNakashima
+app.use('/', require('./routes/index.js'));
+
 // agentチャット画面起動
 app.post('/agent', function(req, res) {
   startScreen(req, res, 'agent');
 });
 // visitorチャット画面起動
 app.post('/visitor', function(req, res) {
+  startScreen(req, res, 'visitor');
+});
+app.get('/visitor', function(req, res) {
   startScreen(req, res, 'visitor');
 });
 

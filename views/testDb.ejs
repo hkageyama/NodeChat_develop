@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+  <head>
+    <title>TestAgentPage</title>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body>
+  <% lists.forEach(function(item) { %>
+    <span>roomId:<%= item.room_id %> / </span>
+    <span>agentId:<%= item.agent_id %><br></span>
+  <% }); %>
+  </body>
+</html>

@@ -5,18 +5,18 @@
     <link rel="stylesheet" href="/css/style.css">
   </head>
   <body id="body_visitor">
-    <div id="content">
-      <div id="header">
-        <div id="header_visitor"><%= agentId %> @ Room #<%= roomId %></div>
+    <div class="content" id="content">
+      <div class="header" id="header">
+        <div class="header_visitor" id="header_visitor"></div>
       </div>
-      <div id="messages_visitor"></div>
-      <div id="footer">
-        <form id="form_visitor" action="">
-          <input id="input_visitor" autocomplete="off"/>
-          <input type="hidden" name="user_type" id="user_type" value="visitor" />
-          <input type="hidden" name="room_id_visitor" id="room_id_visitor" value=<%= roomId %> />
-          <input type="hidden" name="agent_id_visitor" id="agent_id_visitor" value=<%= agentId %> />
-          <input type="submit" id="btn_send_visitor" value="Send" />
+      <div class="messages_visitor" id="messages_visitor"></div>
+      <div class="footer" id="footer">
+        <form class="form_visitor" id="form_visitor" action="">
+          <input class="input_visitor" id="input_visitor" autocomplete="off"/>
+          <input type="hidden" name="user_type" class="user_type" id="user_type" value="visitor" />
+          <input type="hidden" name="room_id_visitor" class="room_id_visitor" id="room_id_visitor" value=<%= roomId %> />
+          <input type="hidden" name="agent_id_visitor" class="agent_id_visitor" id="agent_id_visitor" value=<%= agentId %> />
+          <input type="submit" class="btn_send_visitor" id="btn_send_visitor" value="Send" />
         </form>
       </div>
     </div>
