@@ -4,24 +4,24 @@
     <title>Socket.IO chat</title>
     <link rel="stylesheet" href="/css/style.css">
   </head>
-  <body id="body_visitor">
-    <div class="content" id="content">
-      <div class="header" id="header">
-        <div class="header_visitor" id="header_visitor"></div>
-      </div>
-      <div class="messages_visitor" id="messages_visitor"></div>
-      <div class="footer" id="footer">
-        <form class="form_visitor" id="form_visitor" action="">
-          <input class="input_visitor" id="input_visitor" autocomplete="off"/>
-          <input type="hidden" name="user_type" class="user_type" id="user_type" value="visitor" />
-          <input type="hidden" name="room_id_visitor" class="room_id_visitor" id="room_id_visitor" value=<%= roomId %> />
-          <input type="hidden" name="agent_id_visitor" class="agent_id_visitor" id="agent_id_visitor" value=<%= agentId %> />
-          <input type="submit" class="btn_send_visitor" id="btn_send_visitor" value="Send" />
-        </form>
+  <body id="body">
+    <div class="content" id="content-">
+      <div class="header" id="header-"></div>
+      <div class="messages" name="msg" id="messages-">testmsg</div>
+      <div class="form" id="form-" >
+        <input type="text"   class="input" id="input-" />
+        <input type="button" class="btn_send_visitor" id="btn_send-" value="Snd" />
+        <input type="hidden" id="room_id-" />
       </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.js" integrity="sha256-5i/mQ300M779N2OVDrl16lbohwXNUdzL/R2aVUXyXWA="   crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+      let chatSocket = io.connect('http://localhost:3000/chat/', { query: "userType=visitor" });
+      // $(document).ready(function(){
+      //   alert($('#content').find('div[name=msg]'));
+      // });
+    </script>
     <script src="/js/chat.js" type="text/javascript"></script>
   </body>
 </html>

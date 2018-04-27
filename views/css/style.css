@@ -1,66 +1,75 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-#body_visitor { background: #ffff96; font: 13px Helvetica, Arial; }
-#body_agent { background: rgb(210, 233, 236); font: 13px Helvetica, Arial; }
+#body 
+    { background: #ffff96; 
+      font: 13px Helvetica, Arial; }
+#body_agent 
+    { background: rgb(210, 233, 236); 
+      font: 13px Helvetica, Arial; }
 
 /*************/
 /* Room List */
 /*************/
-#list { height: 100vh; width: 24vw; position: relative; 
-        margin-left: 2px; margin-right: 2px; float: left; }
+#list 
+    { height: 100vh; width: 24vw; 
+      margin-left: 2px; margin-right: 2px; float: left; position: relative; }
 
 /* header */
-#list_header { height: 40px; width: 100%; background:darkgray; position: absolute;}
-#list_header_line { margin-top:5px; margin-left:10px; color:white; font-size: 25px; 
-                    font-weight: bold; }
+#list_header 
+    { height: 40px; width: 100%; background:darkgray; 
+      padding:5px; position: absolute;
+      font-size: 25px; font-weight: bold; color:white; }
 
 /* button */
-#create { height: 40px; width: 100%; top: 40px; background:lightblue; position: absolute;}
-#entry_form_agent, #entry_form_visitor { width: 50%; top: 40px; background: white; }
-#btn_create_agent, #btn_create_visitor { width: 95%; background: darkgray; border: none;
-    padding: 8px; margin-top: 5px; margin-left: 2px; color:white;}
+#form_entry 
+    { height: 40px; width: 100%; background: white; top: 40px; position: absolute; }
+#btn_create
+    { width: 95%; background: darkgray; 
+      padding: 8px; border: none; margin: 4px; 
+      color:white;}
 
 /* list */
-#select { padding: 3px; width: 100%;  top: 80px; background:white; position: absolute; }
-#room_list { width: 100%; height: 90%; overflow: auto; background-color: rgb(255, 255, 150);}
-#room_list div { border-bottom: 1px solid #eee; margin-left: 3px; padding: 2px; 
-                 font-size: 15px }
-#room_list div:hover { background-color: #ddd; }
+#room_list 
+    { width: 100%; background: rgb(255, 255, 150); top: 80px; bottom:0; 
+      padding: 3px; overflow: auto; position: absolute; }
+#room_list div 
+    { border-bottom: 1px solid #eee; 
+      padding: 2px; margin-left: 3px; }
+#room_list div:hover 
+    { background: #ddd; }
 
 /*******************/
 /* Agent Chat Form */
 /*******************/
-.content { height: 100vh; width: 24vw; position: relative; 
-    margin-left: 2px; margin-right: 2px; float: left; }
+.content 
+    { height: 100vh; width: 24vw; 
+      margin-left: 2px; margin-right: 2px; float: left; position: relative;}
 
 /* header */
-.header { height: 40px; width: 100%; background:black; position: absolute;}
-.header_agent { margin-top:5px; margin-left:10px; color:white; font-size: 25px; 
-         font-weight: bold; width:100%; }
-.header_visitor { top:5px; left:10px; color:white; font-size: 25px; 
-         font-weight: bold; width:100%; }
+.header
+    { height: 40px; width: 100%; background:black; 
+      padding:5px; position: absolute; 
+      font-size: 25px; font-weight: bold; color:white; }
 
 /* message */
-.messages_agent { list-style-type: none; top: 40px; bottom: 40px; 
-           overflow: auto; width: 100%; font: 10px; position: absolute;}
-.messages_agent li { padding: 5px 10px;}
-.messages_agent li:nth-child(odd) { background: #eee; }
-.messages_visitor { list-style-type: none; top: 40px; bottom: 40px; 
-             overflow: auto; width: 100%; font: 10px; position: absolute; }
-.messages_visitor li { padding: 5px 10px;}
-.messages_visitor li:nth-child(odd) { background: #eee; }
+.messages 
+    { width: 100%; list-style-type: none; top: 40px; bottom: 40px; 
+      overflow: auto; position: absolute; }
+.messages li 
+    { padding: 5px 10px;}
+.messages li:nth-child(odd) 
+    { background: #eee; }
 
 /* sender */
-.footer { height:60px; width: 100%; bottom: 0; position: absolute; }
-.form_agent { background: #000; width:100%; padding: 3px; bottom: 2px; position: absolute;}
-.form_visitor { background: #000; width:100%; padding: 3px; bottom: 2px; position: absolute;}
-.input_agent { border: none; padding: 7px; width: 72%; margin-right: 2px; 
-               float: right; position: absolute; }
-.input_visitor { border: none; padding: 7px; width: 83%; margin-right: 2px; 
-                 float: right; position: absolute; }
-.btn_send_agent { width: 12%; background: rgb(130, 224, 255); 
-           border: none; padding: 7px; margin-right: 2px; float: right;}
-.btn_done_agent { width: 12%; background: rgb(130, 224, 255); 
-           border: none; padding: 7px; margin-right: 2px; float: right;}
-.btn_send_visitor { width: 12%; background: rgb(130, 224, 255); 
-             border: none; padding: 8px; margin-right: .5%; float: right;}
+.form 
+    { height:40px; width: 100%; background:black; bottom: 1px; 
+      padding: 4px; position: absolute;}
+.input 
+    { width: 70%; padding: 8px; border: none; float: left; position: absolute; }
+.btn 
+    { width: 12%; background: rgb(130, 224, 255);  
+      padding: 8px; border: none; margin-right: 2px; float: right; }
+.btn_send_visitor
+    { width: 25%; background: rgb(130, 224, 255);
+      padding: 8px; border: none; margin-right: 2px; float: right; }
+ 

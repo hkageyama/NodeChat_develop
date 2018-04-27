@@ -9,58 +9,36 @@
 
       <!-- Room List -->
       <div id="list">
-        <div id="list_header">
-          <h1 id="list_header_line">Room List</h1>
-        </div>
-        <div id="create" style="display:inline-flex">
-          <form id="entry_form_agent" style="display: inline" method="post" 
-                action="/agent" target="_blank">
-            <input type="hidden" name="entry_room_id_agent" id="entry_room_id_agent"/>
-            <input type="hidden" name="entry_agent_id_agent" id="entry_agent_id_agent"/>
-            <input type="submit" id="btn_create_agent" value="create room agent" />
-          </form>
-          <form id="entry_form_visitor" style="display: inline" method="post" 
-                action="/visitor" target="_blank">
-            <input type="hidden" name="entry_room_id_visitor" id="entry_room_id_visitor"/>
-            <input type="hidden" name="entry_agent_id_visitor" id="entry_agent_id_visitor"/>
-            <input type="submit" id="btn_create_visitor" value="create room visitor" />
-          </form>
-        </div>
-        <div id="select">
-          <div id="room_list">
-              <% lists.forEach(function(item) { %>
-                <div id="room_list div"> <%= item.room_id %>  : <%= item.agent_id %></div>
-              <% }); %>
-          </div>
+        <div id="list_header">Room List</div>
+        <form id="form_entry" >
+          <input type="submit" id="btn_create" value="create room agent" />
+        </form>
+        <div id="room_list">
+          <% lists.forEach(function(item) { %>
+            <div id="room_list div"> <%= item.room_id %>  : <%= item.agent_id %></div>
+          <% }); %>
         </div>
       </div>
 
       <!-- Agent Chat Form -->
       <div class="content" id="content-">
-        <div class="header" id="header-">
-          <div class="header_agent" id="header_agent-"></div>
-        </div>
-        <div class="messages_agent" id="messages_agent-"></div>
-        <div class="footer" id="footer-">
-          <form class="form_agent" id="form_agent-" name="form_agent" action="">
-            <input class="input_agent" id="input_agent-" autocomplete="off"/>
-            <input type="hidden" class="user_type" name="user_type" id="user_type-" value="agent" />
-            <input type="hidden" class="room_id_agent" name="room_id_agent" 
-                   id="room_id_agent-" value="" />
-            <input type="hidden" class="agent_id_agent" name="agent_id_agent"
-                   id="agent_id_agent-" value=""> />
-            <input type="submit" class="btn_send_agent" id="btn_send_agent-" value="Send" />
-            <input type="submit" class="btn_done_agent" id="btn_done_agent-" value="Done" />
-          </form>
+        <div class="header" id="header-"></div>
+        <div class="messages" id="messages-"></div>
+        <div class="form" id="form-" >
+          <input type="text"   class="input" id="input-" />
+          <input type="submit" class="btn"   id="btn_done-" value="Fin" />
+          <input type="submit" class="btn"   id="btn_send-" value="Snd" />
+          <input type="hidden" id="room_id-" />
         </div>
       </div>
 
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.js" 
-            integrity="sha256-5i/mQ300M779N2OVDrl16lbohwXNUdzL/R2aVUXyXWA="   
-            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+      let chatSocket = io.connect('http://localhost:3000/chat/', { query: "userType=agent" });
+    </script>
     <script src="/js/chat.js" type="text/javascript"></script>
     </body>
 </html>

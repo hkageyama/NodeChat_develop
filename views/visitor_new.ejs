@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Visitor Test</title>
+    <link rel="stylesheet" href="/css/style.css">
+  </head>
+  <body id="body_visitor">
+    <div class="content" id="chatWindow-001">
+      <div class="header" name="header">ChatWindow001</div>
+      <div class="messages" name="messages">OriginalMessage</div>
+      <form class="form" name="form">
+        <input type="text" id="test"  class="input" name="input" />
+        <input type="submit" class="btn_send_visitor" name="btn_send" value="Send" onClick="sendMsg(this)" />
+        <input type="hidden" name="user_type" value="visitor" />
+        <input type="hidden" name="room_id" />
+      </form>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="/js/chat.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $('#chatWindow-001').find('div[name=messages]').append('NewMessage');
+    });
+    
+    function sendMsg(){
+        alert('test');
+    	alert($(this).parent().find('input[name=input]').attr('id'))
+    }
+    </script>
+  </body>
+</html>
