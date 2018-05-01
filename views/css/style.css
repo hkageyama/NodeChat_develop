@@ -32,10 +32,10 @@
 #room_list 
     { width: 100%; background: rgb(255, 255, 150); top: 80px; bottom:0; 
       padding: 3px; overflow: auto; position: absolute; }
-#room_list div 
+.room_list_div
     { border-bottom: 1px solid #eee; 
       padding: 2px; margin-left: 3px; }
-#room_list div:hover 
+.room_list_div:hover 
     { background: #ddd; }
 
 /*******************/
@@ -67,9 +67,6 @@
 .input 
     { width: 70%; padding: 8px; border: none; float: left; position: absolute; }
 .btn 
-    { width: 12%; background: rgb(130, 224, 255);  
-      padding: 8px; border: none; margin-right: 2px; float: right; }
-.btn_send_visitor
-    { width: 25%; background: rgb(130, 224, 255);
+    { width: 12%; background: rgb(130, 224, 255);
       padding: 8px; border: none; margin-right: 2px; float: right; }
  
