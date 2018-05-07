@@ -1,5 +1,5 @@
-// "./node_modules/.bin/nodemon" app.js を実行しておくと、ソース修正後にオートコンパイル
-// ./node_modules/.bin/nodemon app.js (windows10)
+// "./node_modules/.bin/nodemon" app.js
+// ./node_modules/.bin/nodemon app.js
 // 各種import
 const express = require('express');
 const app = express();

@@ -42,7 +42,7 @@
 /* Agent Chat Form */
 /*******************/
 .content 
-    { height: 100vh; width: 24vw; 
+    { height: 100vh; width: 24vw; border: 2px outset black;
       margin-left: 2px; margin-right: 2px; float: left; position: relative;}
 
 /* header */

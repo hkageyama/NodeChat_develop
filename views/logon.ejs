@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title>Logon</title>
+    <!-- <link rel="stylesheet" href="/css/style.css"> -->
+  </head>
+  <body id="body">
+  <br>
+  <form method="get" action="/visitor">
+    <input type="radio" name="userType">agent
+    <input type="radio" name="userType" checked>visitor
+    <input type="text" name="id" />
+    <input type="submit" name="logon" value="logon" />
+  </form>
+  <div id="msg"></div><br>
+  <input type="button" name="btn-clear" value="cookie-clear"/>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      var cookies = document.cookie;
+      $('#msg').append('Cookie:' + cookies);
+      // ルーム作成（エージェント）
+      $(document).on('click', '[name=btn-clear]', function(){
+        document.cookie = 'chatId=;max-age=0';
+      });
+      $(document).on('click', '[name=logon]', function(){
+        document.cookie = 'chatId=' + $('[name=id]').val()
+      });
+    });
+  </script>
+</body>
+</html>
