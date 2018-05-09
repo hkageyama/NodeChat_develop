@@ -5,9 +5,9 @@
   </head>
   <body id="body">
   <br>
-  <form method="get" action="/visitor">
-    <input type="radio" name="userType">agent
-    <input type="radio" name="userType" checked>visitor
+  <form method="post" action="/chat">
+    <input type="radio" name="userType" value="agent">agent
+    <input type="radio" name="userType" value="visitor" checked>visitor
     <input type="text" name="id" />
     <input type="submit" name="logon" value="logon" />
   </form>
@@ -16,14 +16,28 @@
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script>
     $(document).ready(function(){
-      var cookies = document.cookie;
+      let cookies = document.cookie;
+
+      // クッキーの値を表示
       $('#msg').append('Cookie:' + cookies);
-      // ルーム作成（エージェント）
+
+      // Cookieクリア
       $(document).on('click', '[name=btn-clear]', function(){
         document.cookie = 'chatId=;max-age=0';
+        $('#msg').empty();
+        $('#msg').append('Cookie:');
       });
+
+      // ログオン
       $(document).on('click', '[name=logon]', function(){
-        document.cookie = 'chatId=' + $('[name=id]').val()
+        let agentHeader = '';
+        // if ($('[name=userType]').val() === 'agent') {
+        //   agentHeader = 'agent-';
+        // }
+        // alert(agentHeader);
+        if ($('[name=id]').val() != '') {
+          document.cookie = 'chatId=' + agentHeader + $('[name=id]').val();
+        }
       });
     });
   </script>

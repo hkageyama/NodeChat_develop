@@ -16,8 +16,8 @@
         <div id="room_list">
           <% lists.forEach(function(item) { %>
             <div class="room_list_div" id="room_list_div-<%= item.room_id %>">
-              Room # <%= item.room_id %>
-              <!-- # <%= item.room_id %> : <%= item.visitor_id %> -->
+              <!-- Room # <%= item.room_id %> -->
+              Room # <%= item.room_id %> : <%= item.visitor_id %>
             </div>
           <% }); %>
         </div>
@@ -28,7 +28,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript">
-      let chatSocket = io.connect('http://localhost:3000/chat', { query: "userType=agent"});
+      let chatSocket = io.connect('http://localhost:3000/chat', { query: {'userType':'agent', 'chatId':'<%= chatId %>'} });
       let statusSocket = io.connect('http://localhost:3000/status', { query: "userType=agent" });
     </script>
     <script src="/js/chat.js" type="text/javascript"></script>

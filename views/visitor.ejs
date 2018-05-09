@@ -12,9 +12,6 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript">
       let chatSocket = io.connect('http://localhost:3000/chat', { query: {'userType':'visitor', 'chatId':'<%= chatId %>'} });
-      // let chatSocket = io.connect('http://localhost:3000/chat', { query: "userType=visitor,chatId=<%= chatId %>" });
-      // let statusSocket = io.connect('http://localhost:3000/status', { query: "userType=visitor,chatId=<%= chatId %>" });
-      // let chatSocket = io.connect('http://localhost:3000/chat', { query: "userType=visitor" });
       let statusSocket = io.connect('http://localhost:3000/status', { query: "userType=visitor" });
     </script>
     <script src="/js/chat.js" type="text/javascript"></script>

@@ -23,21 +23,21 @@ const DOM_AGENT_WIDGET = "" +
 
 $(document).ready(function(){
 
-    /////////////
-    // リスナー //
-    /////////////
+/////////////
+// リスナー //
+/////////////
 
     // メッセージ受信
-    chatSocket.on('front chat message', (value, roomId, userType) => {
+    chatSocket.on('front chat message', (msg, roomId, userType) => {
         let contentDomId = CONTENT_OBJECT_NAME_HEADER + roomId;
 
         // メッセージをエリアに追加表示
-        $(contentDomId).find('[name='+ MESSAGES_OBJECT_NAME + ']').append($('<li>').text(value));
+        $(contentDomId).find('[name='+ MESSAGES_OBJECT_NAME + ']').append($('<li>').text(msg));
         $(contentDomId).find('[name='+ MESSAGES_OBJECT_NAME + ']').
           scrollTop($(contentDomId).find('[name='+ MESSAGES_OBJECT_NAME + ']').prop('scrollHeight'));
     });
 
-    // ウィジェット更新
+    // ウィジェットヘッダー更新
     chatSocket.on('front refresh', (roomId, userType) => {
         let contentDomId = CONTENT_OBJECT_NAME_HEADER + roomId;
 
@@ -46,9 +46,9 @@ $(document).ready(function(){
         $(contentDomId).find('[name='+ HEADER_OBJECT_NAME + ']').append('Room # ' + roomId);
     });
 
-    // ウィジェット 新規作成(エージェント) 
+    // ウィジェットDOM新規作成
     chatSocket.on('front open widget', (roomId, userType) => {
-        openChatWidget(roomId, userType);
+        createWidget(roomId);
     });
 
     // エラーハンドリング
@@ -57,11 +57,9 @@ $(document).ready(function(){
     });
 
     // ルームリスト追加
-    statusSocket.on('front append room list', (roomId, agentId) => {
-        // $('#room_list').append(
-        //     '<div class="room_list_div" id="room_list_div-'  + roomId + '"># ' + roomId + ' : ' + agentId);
+    statusSocket.on('front append room list', (roomId, chatId) => {
         $('#room_list').append(
-            '<div class="room_list_div" id="room_list_div-'  + roomId + '">Room # ' + roomId);
+            '<div class="room_list_div" id="room_list_div-'  + roomId + '">Room # ' + roomId + ' : ' + chatId);
     });
 
     // ルームリスト削除
@@ -69,9 +67,20 @@ $(document).ready(function(){
         $('#room_list_div-' + roomId).remove();
     });
 
-    /////////////
-    // イベント //
-    /////////////
+    // test!!!
+    statusSocket.on('front chat message Beta', (msg, roomId, userType) => {
+        let contentDomId = CONTENT_OBJECT_NAME_HEADER + roomId;
+
+        // メッセージをエリアに追加表示
+        $(contentDomId).find('[name='+ MESSAGES_OBJECT_NAME + ']').append($('<li>').text(msg));
+        $(contentDomId).find('[name='+ MESSAGES_OBJECT_NAME + ']').
+          scrollTop($(contentDomId).find('[name='+ MESSAGES_OBJECT_NAME + ']').prop('scrollHeight'));
+    });
+
+
+/////////////
+// イベント //
+/////////////
 
     // エージェントメッセージ送信
     // ※動的に生成したDOMは$(document).on('click'～の形式で記載しないとイベントを認識しない
@@ -80,7 +89,7 @@ $(document).ready(function(){
         sendMessage(this);
     });
 
-    // エージェントメッセージ送信
+    // エージェントメッセージ送信(エンターキー押下)
     $(document).on('keydown', '[name=input]', function() {
         if (event.keyCode == 13) {
             // メッセージ送信
@@ -88,38 +97,40 @@ $(document).ready(function(){
         }
     });
 
-    // エージェントチャット画面クローズ
+    // ウィジェットを閉じる
     $(document).on('click', '[name=btn_fin]', function() {
         let obj = $(this).parent().parent()
         let roomId =  getChildID(obj.attr('id'));
         let contentDomId = CONTENT_OBJECT_NAME_HEADER + roomId;
 
-        // ウィジェット削除
+        // DOM削除
         $(contentDomId).remove();
         // [emit] 退室
         chatSocket.emit('leave room', roomId);
     });
 
-    // ルーム入室
+    // ルームに入室
     $(document).on('click', '.room_list_div', function(){
+        // 選択したリストの文言からルーム#を取得
         let roomInfo = $(this).text().trim();
-        // let roomId = roomInfo.
-        //     substr(ROOM_NO_POSIT, roomInfo.indexOf(':') - (ROOM_NO_POSIT + 1)).trim();
-        let roomId = roomInfo.substr(ROOM_NO_POSIT).trim();
+        let roomId = roomInfo.
+            substr(ROOM_NO_POSIT, roomInfo.indexOf(':') - (ROOM_NO_POSIT + 1)).trim();
         let contentDomId = CONTENT_OBJECT_NAME_HEADER + roomId;
         
-        // 同室入室時制御
+        // 同室入室時の制御
         if ($(contentDomId).attr('id') != undefined) {
             alert('Room#'+ roomId + 'には入室済みです。')
             return false;
         }
         // チャットウィジェットオープン(エージェント)
-        openChatWidget(roomId);
+        createWidget(roomId);
         // [emit] 入室
         chatSocket.emit('join room', roomId);
+        // test!!!
+        statusSocket.emit('join room Beta', roomId);
     });
 
-    // ルーム作成（エージェント）
+    // ルームの作成（エージェント）
     $(document).on('click', '#btn_create', function(){
         // [emit] 部屋作成
         chatSocket.emit('new room');
@@ -133,25 +144,37 @@ $(document).ready(function(){
 // 関数 //
 //////////
 
-// チャットウィジェット オープン
-var openChatWidget = function(roomId, userType) {
-    // ウィジェットオブジェクト追加
-    let obj = $(DOM_AGENT_WIDGET).appendTo('#parent');
-    // 追加オブジェクトTopDiv-ID変更
-    obj.attr("id", "content-" + roomId);
+// ウィジェットDOM生成
+var createWidget = function(roomId) {
+    let contentDomId = CONTENT_OBJECT_NAME_HEADER + roomId;
+       
+    // 同室入室時制御
+    if ($(contentDomId).attr('id') === undefined) {
+        // ウィジェットオブジェクト追加
+        let obj = $(DOM_AGENT_WIDGET).appendTo('#parent');
+        // 追加オブジェクトTopDiv-ID変更
+        obj.attr("id", "content-" + roomId);
+    }
 }
 
 // 子オブジェクトIDからルーム＃を取得する
 var getChildID = function(val) {
-    if (val === undefined || val === null) throw new Error("エラーだよ");
+    if (val === undefined || val === null) {
+        throw new Error("Error Content DomId is null.");
+        // このあたりのエラー制御方法をどうするか
+        // アラートを表示させるだけか。エラー画面に遷移させるか。
+        return false;
+    }
     return val.substr(val.indexOf('-') + 1);
 }
 
-// 子オブジェクトIDからルーム＃を取得する
+// 子オブジェクトからcontent DomIdを参照しルーム＃を取得する
 var sendMessage = function(that) {
-    let roomId =  getChildID($(that).parent().parent().attr('id'));
+    // let roomId =  getChildID($(that).parent().parent().attr('id'));
+    let contentDomId = '#' + $(that).parent().parent().attr('id');
     let message = $(that).parent().parent().find('[name=' + INPUT_OBJECT_NAME + ']').val();
-    let contentDomId = CONTENT_OBJECT_NAME_HEADER + roomId;
+    // let contentDomId = CONTENT_OBJECT_NAME_HEADER + roomId;
+    let roomId =  getChildID(contentDomId);
 
     if (roomId === '') return false;
     // [emit] メッセージ送信
