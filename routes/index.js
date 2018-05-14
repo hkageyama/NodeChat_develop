@@ -35,6 +35,13 @@ router.post('/post_to_sdk', function(req, res) {
     console.log('send SDK. msg:' + req.body.key);
 });
 
+const chatServer = require('../lib/chatServer');
+router.post('/post', function(req, res) {
+    console.log('called post to ' + req.body.id);
+    chatServer.chatchPost(req);
+    res.render('post');
+});
+
 // Cookieのキーを指定して値を取得
 var getCookieValue = function(cookie, key) {
     let val = cookie.match(new RegExp('(^|\\s)'+key+'=([^;]+)'));
