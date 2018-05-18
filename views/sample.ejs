@@ -1,9 +1,0 @@
-
-
-<script src="/socket.io/socket.io.js"></script>
-<script type="text/javascript">
-  let chatSocket = io.connect('http://localhost:3000/chat', { query: {'userType':'agent', 'chatId':'<%= chatId %>'} });
-  let statusSocket = io.connect('http://localhost:3000/status', { query: "userType=agent" });
-</script>
-<script src="/js/chat.js" type="text/javascript"></script>
-

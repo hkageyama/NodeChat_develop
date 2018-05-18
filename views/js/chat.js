@@ -67,16 +67,6 @@ $(document).ready(function(){
         $('#room_list_div-' + roomId).remove();
     });
 
-    // test!!!
-    statusSocket.on('front chat message Beta', (msg, roomId, userType) => {
-        let contentDomId = CONTENT_OBJECT_NAME_HEADER + roomId;
-
-        // メッセージをエリアに追加表示
-        $(contentDomId).find('[name='+ MESSAGES_OBJECT_NAME + ']').append($('<li>').text(msg));
-        $(contentDomId).find('[name='+ MESSAGES_OBJECT_NAME + ']').
-          scrollTop($(contentDomId).find('[name='+ MESSAGES_OBJECT_NAME + ']').prop('scrollHeight'));
-    });
-
 
 /////////////
 // イベント //

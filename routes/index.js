@@ -35,6 +35,11 @@ router.post('/post_to_sdk', function(req, res) {
     console.log('send SDK. msg:' + req.body.key);
 });
 
+
+router.get('/post', function(req, res) {
+    res.render('post');
+});
+
 const chatServer = require('../lib/chatServer');
 router.post('/post', function(req, res) {
     console.log('called post to ' + req.body.id);

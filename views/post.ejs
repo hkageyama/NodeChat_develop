@@ -1,20 +1,8 @@
 <html>
-<h1>Post Request</h1>
+<h1>Post Request to Chat Application</h1>
 <form method="post" action="/post">
-  <input type="text" name="id"/>
-  <input type="text" name="msg"/>
-  <input type="submit" value="message">
+  roomId:<input type="text" name="roomId"/>
+  message:<input type="text" name="msg"/>
+  <input type="submit" value="send">
 </form>
-<form method="post" action="/invitation">
-  <input type="text" name="agent_id"/>
-  <input type="text" name="room_id"/>
-  <input type="submit" value="invitation">
-</form>
-<form method="post" action="/msg2">
-  <input type="text" name="id1"/>
-  <input type="text" name="id2"/>
-  <input type="text" name="msg2"/>
-  <input type="submit" value="message to 2">
-</form>
-
 </html>
